@@ -8,15 +8,23 @@ exports.handler  = async (event, context) => {
 
   const params = {
     TableName: "Products",
+    Key: {
+      id: '12345',
+    },
+    UpdateExpression: "set productname = :n",
+    ExpressionAttributeValues: {
+      ":n": "Water pumps"
+    },
+    ReturnValues: "UPDATED_OLD"
   };
 
   try {
-    const data = await documentClient.scan(params).promise();
-    responseBody = JSON.stringify(data.Items);
-    statusCode = 200;
+    const data = await documentClient.update(params).promise();
+    responseBody = JSON.stringify(data);
+    statusCode = 204;
   } catch (err) {
     console.log(err);
-    responseBody = `Unable to get products: ${err}`;
+    responseBody = `Unable to update product: ${err}`;
     statusCode = 403;
   }
 
