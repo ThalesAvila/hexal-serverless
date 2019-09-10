@@ -24,7 +24,7 @@ exports.handler  = async (event, context) => {
     statusCode = 204;
   } catch (err) {
     console.log(err);
-    responseBody = `Unable to update product: ${err}`;
+    responseBody = `Unable to update the product: ${err}`;
     statusCode = 403;
   }
 
